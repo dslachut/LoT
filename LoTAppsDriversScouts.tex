@@ -1,0 +1,263 @@
+%This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 
+%International License. To view a copy of this license, visit 
+%http://creativecommons.org/licenses/by-sa/4.0/deed.en_US.
+
+\documentclass[11pt]{beamer}
+%\usetheme{default}
+%\usetheme{Boadilla}
+%\usetheme{Madrid}
+%\usetheme{Pittsburgh}
+%\usetheme[height=7mm]{Rochester}
+%\usetheme{Copenhagen}
+%\usetheme{Warsaw}
+\usetheme{Singapore}
+%\usetheme{Malmoe}
+%\usetheme{Cambridge}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\author{David Lachut}
+\title{Writing Apps, Drivers, and Scouts for the LoT Hub}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+%\institute{} 
+%\date{} 
+%\subject{} 
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+\tableofcontents
+\end{frame}
+
+\section{First Things}
+
+\begin{frame}{Dude, you're not Dr Banerjee ...}
+    \begin{itemize}
+        \item My name is David
+        \item PhD student since 2011
+        \item Working on HomeOS/LoT Hub since pre-Alpha
+        \item dlachut1@umbc.edu
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Terms}
+    \begin{itemize}
+        \item[Port]     An access point for services
+        \item[Role]     An agreed upon description of what a service can do
+        \item[Module]   A software addin to Hub that accesses Ports
+        \item[App]      A module that consumes services from Ports
+        \item[Driver]   A module that provides services via Ports
+        \item[Scout]    A helper program to scan for hardware and activate a driver
+        \item[Platform] The control layer between Apps, Drivers, and Scouts
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{}
+    \begin{itemize}
+        \item Does everyone have their Dev environment set-up with dependencies installed?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The rest of the lecture}
+    \begin{itemize}
+        \item 1h 15m is not enough time to thoroughly cover all the necessary details
+        \item Even if it were, you probably wouldn't learn it without working along with me
+        \item This talk will be an overview to make it easier when you read the docs
+    \end{itemize}
+\end{frame}
+
+\section{Make an App}
+
+\begin{frame}{Agenda}
+\tableofcontents
+\end{frame}
+
+\begin{frame}{Overview}
+    \begin{itemize}
+        \item Create a VS Project
+        \item Set Names, Properties, and References
+        \item Implement the Abstract Methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Create a VS Project}
+    \begin{itemize}
+        \item In Apps section of the solution
+        \item Add a C\# Class Library
+        \item Place in ``Apps'' directory
+        \item Override the Abstract Methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Set Names, Properties, and References}
+    \begin{itemize}
+        \item Source: Rename the class
+        \item Source: Rename the Namespace
+        \item Source: Add `using' declarations
+        \item Source: Add property declaration
+        \item Source: Inherit from ModuleBase
+        \item Source: Generate Stubs for Abstract Methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Set Names, Properties, and References}
+    \begin{itemize}
+        \item References: Add `Common', `Views', and `DataStore'
+        \item References: Add `AddIn', `ServiceModel', and `ServiceModel.Web'
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Set Names, Properties, and References}
+    \begin{itemize}
+        \item Properties: Set the output path
+        \item Properties: Set the Assembly Name
+        \item Properties: Set the Default namespace
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Override the Abstract Methods}
+    \begin{itemize}
+        \item \texttt{Start()} Entry point for the App
+        \item \texttt{Stop()}  Clean up after the App
+        \item \texttt{PortRegistered(VPort port)}\\ Called when a port is instantiated somewhere on the hub
+        \item \texttt{PortDeregistered(VPort port)}\\ Called when a port is removed from the hub
+        \item \texttt{OnNotification(string Rolename, string OpName, IList<VParamType> retVals, VPort senderPort)}\\ Called when a notification is issued from a subscribed port
+    \end{itemize}
+\end{frame}
+
+\section{Make a Driver}
+
+\begin{frame}{Agenda}
+\tableofcontents
+\end{frame}
+
+\begin{frame}{Overview}
+    \begin{itemize}
+        \item Create a VS Project
+        \item Set Names, Properties, and References
+        \item Implement the Abstract Methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Create a VS Project}
+    \begin{itemize}
+        \item In Drivers section of the solution
+        \item Add a C\# Class Library
+        \item Place in ``Drivers'' directory
+        \item Override the Abstract Methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Set Names, Properties, and References}
+    \begin{itemize}
+        \item Source: Rename the class
+        \item Source: Rename the Namespace
+        \item Source: Add `using' declarations
+        \item Source: Add property declaration
+        \item Source: Inherit from ModuleBase
+        \item Source: Implement abstract Methods
+        \item References: Add `Common', `Views', and `DataStore'
+        \item References: Add `AddIn', `ServiceModel', and `ServiceModel.Web'
+        \item Properties: Set the output path
+        \item Properties: Set the Assembly Name
+        \item Properties: Set the Default namespace
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Override the Abstract Methods}
+    \begin{itemize}
+        \item \texttt{Start()} Entry point for the App
+        \item \texttt{Stop()}  Clean up after the App
+        \item \texttt{PortRegistered(VPort port)}\\ Called when a port is instantiated somewhere on the hub
+        \item \texttt{PortDeregistered(VPort port)}\\ Called when a port is removed from the hub
+        \item \texttt{OnNotification(string Rolename, string OpName, IList<VParamType> retVals, VPort senderPort)}\\ Called when a notification is issued from a subscribed port
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Override the Abstract Methods}
+    \begin{itemize}
+        \item \texttt{PortDeregistered(VPort port)}
+        \item \texttt{PortRegistered(VPort port)}
+        \item \texttt{OnNotification(string Rolename, string OpName, IList<VParamType> retVals, VPort senderPort)}
+        \item A driver can usually have these methods do nothing, because it usually doesn't care about other ports
+    \end{itemize}
+\end{frame}
+
+
+
+\section{Make a Scout}
+
+\begin{frame}{Agenda}
+\tableofcontents
+\end{frame}
+
+\begin{frame}{Overview}
+    \begin{itemize}
+        \item Create a VS Project
+        \item Set Names, Properties, and References
+        \item Implement the Abstract Methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Create a VS Project}
+    \begin{itemize}
+        \item In Scouts section of the solution
+        \item Add a C\# Class Library
+        \item Place in ``Scouts'' directory
+        \item Override the Abstract Methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Set Names, Properties, and References}
+    \begin{itemize}
+        \item Source: Rename the class
+        \item Source: Rename the Namespace
+        \item Source: Add `using' declarations
+        \item Source: Don't need property declaration
+        \item Source: Inherit from IScout
+        \item Source: Implement abstract Methods
+        \item References: Add `Common', `Views', and `DeviceScout'
+        \item References: Add `AddIn', `ServiceModel', and `ServiceModel.Web'
+        \item Properties: Set the output path
+        \item Properties: Set the Assembly Name
+        \item Properties: Set the Default namespace
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Set Names, Properties, and References}
+    \begin{itemize}
+        \item Easiest way to implement the Scout is to copy the DummyScout and change the names as appropriate
+        \item Only substantive differences will be in the \texttt{GetDevices()} method
+    \end{itemize}
+\end{frame}
+
+\section{RTFM}
+
+\begin{frame}{Agenda}
+\tableofcontents
+\end{frame}
+
+\begin{frame}{RTFM}
+    \begin{itemize}
+        \item I hope this has been a decent orientation.
+        \item You'll probably need to \\
+        
+        \href{https://labofthings.codeplex.com/downloads/get/764896}{\large RTFM: Read The \textit{Fine} Manuals} at
+        
+        {\small\url{https://labofthings.codeplex.com/downloads/get/764896} [PDF WARNING]}
+        
+        \item Look here, too:
+        
+        {\small\url{http://labofthings.codeplex.com/documentation}}
+        
+    \end{itemize}
+\end{frame}
+
+\end{document}
